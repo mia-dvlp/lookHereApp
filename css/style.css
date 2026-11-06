@@ -1,0 +1,328 @@
+/* LookHere! page styling: theProblemFldr/brandingFldr/brandGuide.md and designFldr/screenDesign.md */
+
+:root {
+    --bark-dark: #2B1D14;
+    --deep-copper: #7A3E1D;
+    --copper: #B87333;
+    --leaf-gold: #C9A227;
+    --silver-bark: #B9BBB6;
+    --birch-paper: #F4F1EC;
+
+    --font-heading: Impact, "Arial Narrow Bold", sans-serif;
+    --font-body: "Palatino Linotype", Palatino, "Book Antiqua", serif;
+    --font-ui: Arial, Helvetica, sans-serif;
+
+    /* Everything should stay on screen, so the image area shrinks with the window height. */
+    --stage-height: clamp(260px, calc(100vh - 400px), 560px);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Layout rules such as display: flex would otherwise override the hidden attribute. */
+[hidden] {
+    display: none !important;
+}
+
+body {
+    margin: 0;
+    background: var(--silver-bark);
+    color: var(--bark-dark);
+    font-family: var(--font-ui);
+}
+
+.page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 16px 24px;
+}
+
+/* ---------- Header ---------- */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.logo {
+    font-family: var(--font-heading);
+    font-weight: normal;
+    font-size: 72px;
+    line-height: 0.95;
+    margin: 0;
+    letter-spacing: 0.01em;
+}
+
+.logo-look {
+    color: #fff;
+}
+
+.logo-here {
+    color: var(--deep-copper);
+}
+
+.tagline {
+    font-family: var(--font-ui);
+    font-weight: bold;
+    font-size: 28px;
+    color: var(--deep-copper);
+    margin: 2px 0 0;
+}
+
+.header-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ---------- Buttons ---------- */
+
+.button {
+    font-family: var(--font-ui);
+    font-weight: bold;
+    font-size: 16px;
+    border: 0;
+    border-radius: 0;
+    min-width: 132px;
+    padding: 14px 16px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.button-gold {
+    background: var(--leaf-gold);
+    color: var(--bark-dark);
+}
+
+.button-copper {
+    background: var(--deep-copper);
+    color: var(--birch-paper);
+}
+
+.button:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.button:focus-visible {
+    outline: 3px solid var(--bark-dark);
+    outline-offset: 2px;
+}
+
+/* ---------- Image area ---------- */
+
+.stage {
+    position: relative;
+    height: var(--stage-height);
+    margin: 22px 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* No image yet: a Copper panel with soft Deep Copper edges, as in the sketches. */
+    background: linear-gradient(to bottom, var(--deep-copper) 0%, var(--copper) 18%,
+        var(--copper) 82%, var(--deep-copper) 100%);
+    box-shadow: 0 0 18px 6px rgba(122, 62, 29, 0.55);
+}
+
+/* Once an image is loaded, the frame turns Deep Copper so it doesn't compete with the image. */
+body[data-state="loaded"] .stage,
+body[data-state="analysing"] .stage,
+body[data-state="token"] .stage,
+body[data-state="noClearToken"] .stage,
+body[data-state="none"] .stage {
+    background: var(--deep-copper);
+}
+
+.start-panels {
+    display: flex;
+    gap: 36px;
+    width: 86%;
+    max-height: 100%;
+}
+
+.panel {
+    flex: 1;
+    padding: 14px 16px 18px;
+}
+
+.load-panel {
+    background: var(--silver-bark);
+}
+
+.panel-heading {
+    font-family: var(--font-ui);
+    font-weight: normal;
+    font-size: 30px;
+    color: var(--deep-copper);
+    margin: 0 0 10px;
+}
+
+.readme-panel .panel-heading {
+    color: var(--birch-paper);
+}
+
+.drop-area {
+    background: var(--birch-paper);
+    min-height: 130px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 10px;
+    border: 2px dashed transparent;
+}
+
+.drop-area p {
+    margin: 0;
+    font-weight: bold;
+    color: var(--bark-dark);
+}
+
+.drop-area.drag-over {
+    border-color: var(--deep-copper);
+}
+
+.readme {
+    background: var(--silver-bark);
+    margin: 0;
+    padding: 12px 16px 12px 34px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.45;
+    min-height: 130px;
+}
+
+.image-canvas {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* ---------- Action row ---------- */
+
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.press {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.press-here {
+    font-family: var(--font-heading);
+    font-size: 54px;
+    line-height: 1;
+    color: var(--deep-copper);
+}
+
+/* "pressHere" fades with the button, as in the sketches. */
+body:not([data-state="loaded"]) .press-here {
+    opacity: 0.35;
+}
+
+.feedback {
+    flex: 0 1 480px;
+    min-height: 52px;
+    padding: 8px 14px;
+    background: var(--birch-paper);
+    border: 3px solid var(--deep-copper);
+    color: var(--deep-copper);
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 1.35;
+    display: flex;
+    align-items: center;
+}
+
+body[data-state="start"] .feedback {
+    opacity: 0.45;
+}
+
+/* Token found: gold, with Bark Dark text to match the gold buttons. */
+body[data-state="token"] .feedback {
+    background: var(--leaf-gold);
+    color: var(--bark-dark);
+}
+
+/* ---------- Small print ---------- */
+
+.small-print {
+    margin-top: 22px;
+}
+
+.small-print-heading {
+    font-family: var(--font-ui);
+    font-weight: normal;
+    font-size: 30px;
+    color: var(--deep-copper);
+    margin: 0;
+    padding-bottom: 2px;
+    border-bottom: 3px solid var(--leaf-gold);
+}
+
+.small-print p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--bark-dark);
+    margin: 6px 0 0;
+}
+
+.small-print .error-details {
+    font-weight: bold;
+}
+
+/* ---------- Narrow windows ---------- */
+
+@media (max-width: 760px) {
+    .logo {
+        font-size: 52px;
+    }
+
+    .tagline {
+        font-size: 20px;
+    }
+
+    .start-panels,
+    .actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .start-panels {
+        gap: 12px;
+        width: 92%;
+    }
+
+    .stage {
+        height: auto;
+        min-height: var(--stage-height);
+        padding: 16px 0;
+    }
+
+    /* A wide still is short on a narrow screen, so the frame hugs it rather than leaving empty bands. */
+    body[data-state="loaded"] .stage,
+    body[data-state="analysing"] .stage,
+    body[data-state="token"] .stage,
+    body[data-state="noClearToken"] .stage,
+    body[data-state="none"] .stage {
+        min-height: 0;
+        padding: 10px;
+    }
+
+    .press-here {
+        font-size: 40px;
+    }
+
+    .feedback {
+        flex-basis: auto;
+    }
+}
